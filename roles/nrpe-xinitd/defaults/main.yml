@@ -1,0 +1,9 @@
+---
+
+nrpe_port: 5666
+nrpe_user: nagios
+nrpe_group: nagios
+nrpe_path: /sbin/nrpe
+nrpe_config_path: /etc/nagios/nrpe.cfg
+
+...

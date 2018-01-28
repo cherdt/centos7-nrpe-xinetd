@@ -1,0 +1,33 @@
+---
+
+- name: install epel-release
+  yum:
+    name: epel-release
+    state: present
+
+- name: install nrpe, xinetd, and nrpe-plugins
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - nrpe
+    - xinetd
+    - nagios-plugins-all
+
+- name: add nrpe config for xinetd
+  copy:
+    src: nrpe
+    dest: /etc/xinetd.d/nrpe
+    owner: root
+    group: root
+    mode: 0600
+  notify:
+    - restart xinetd
+
+- name: enable xinetd
+  systemd:
+    name: xinetd
+    state: started
+    enabled: True
+
+...
