@@ -5,11 +5,12 @@
     name: epel-release
     state: present
 
-- name: install nrpe, xinetd, and nrpe-plugins
+- name: install nagios, nrpe, xinetd, and nrpe-plugins
   yum:
     name: "{{ item }}"
     state: present
   with_items:
+    - nagios
     - nrpe
     - xinetd
     - nagios-plugins-all
@@ -24,10 +25,20 @@
   notify:
     - restart xinetd
 
-- name: enable xinetd
+- name: allow http via firewalld
+  firewalld:
+    service: http
+    permanent: true
+    state: enabled
+
+- name: enable services
   systemd:
     name: xinetd
     state: started
     enabled: True
+  with_items:
+    - httpd
+    - nagios
+    - xinetd
 
 ...
