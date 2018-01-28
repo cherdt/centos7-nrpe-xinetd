@@ -16,6 +16,13 @@
     - nagios-plugins-all
     - nagios-selinux
 
+- name: add NRPE to services
+  lineinfile:
+    path: /etc/services
+    regexp: '^nrpe'
+    line: "nrpe            {{ nrpe_port }}/tcp"
+    state: present
+
 - name: add nrpe config for xinetd
   template:
     src: nrpe.j2
