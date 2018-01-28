@@ -14,6 +14,7 @@
     - nrpe
     - xinetd
     - nagios-plugins-all
+    - nagios-selinux
 
 - name: add nrpe config for xinetd
   template:
